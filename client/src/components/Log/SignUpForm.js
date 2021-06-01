@@ -9,6 +9,7 @@ const SignUpForm = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    let res;
     const terms = document.getElementById("terms");
     const pseudoError = document.querySelector(".pseudo.error");
     const emailError = document.querySelector(".email.error");
@@ -20,6 +21,7 @@ const SignUpForm = () => {
 
     passwordConfirmError.innerHTML = "";
     termsError.innerHTML = "";
+    
 
     if (password !== controlPassword || !terms.checked) {
       if (password !== controlPassword) {
@@ -28,8 +30,10 @@ const SignUpForm = () => {
       }
       if (!terms.checked) {
         termsError.innerHTML = "Veuillez valider les conditions générales";
-      } else {
-        await axios({
+      }
+    } else {
+      try {
+        res = await axios({
           method: "post",
           url: `${process.env.REACT_APP_API_URL}api/user/register`,
           data: {
@@ -38,17 +42,13 @@ const SignUpForm = () => {
             password
           }
         })
-        .then((res) => {
-          console.log(res);
-          if (res.data.errors) {
-            pseudoError.innerHTML = res.data.errors.pseudo;
-            emailError.innerHTML = res.data.errors.email;
-            passwordError.innerHTML = res.data.errors.password;
-          }
-        })
-        .catch((err) => console.log(err));
+      } catch (e) {
+        pseudoError.innerHTML = e.response.data.errors.pseudo;
+        emailError.innerHTML = e.response.data.errors.email;
+        passwordError.innerHTML = e.response.data.errors.password;
       }
     }
+    console.log(res);
   };
 
   return (

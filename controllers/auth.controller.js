@@ -14,12 +14,11 @@ module.exports.signUp = async (req, res) => {
   const {pseudo, email, password} = req.body
 
   try {
-    const user = await UserModel.create({pseudo, email, password });
-    res.status(201).json({ user: user._id});
-  }
-  catch(err) {
+    const user = await UserModel.create({ pseudo, email, password });
+    res.status(200).json({ user: user._id });
+  } catch(err) {
     const errors = signUpErrors(err);
-    res.status(200).send({ errors })
+    res.status(401).send({ errors })
   }
 }
 
@@ -33,7 +32,7 @@ module.exports.signIn = async (req, res) => {
     res.status(200).json({ user: user._id})
   } catch (err){
     const errors = signInErrors(err);
-    res.status(200).json({ errors });
+    res.status(401).json({ errors });
   }
 }
 
