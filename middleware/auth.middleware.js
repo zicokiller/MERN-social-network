@@ -2,38 +2,26 @@ const jwt = require("jsonwebtoken");
 const UserModel = require("../models/user.model");
 
 module.exports.checkUser = (req, res, next) => {
-  const token = req.cookies.jwt;
+  const token = req.headers["authorization"]?.split("Bearer ")[1];
   if (token) {
     jwt.verify(token, process.env.TOKEN_SECRET, async (err, decodedToken) => {
       if (err) {
-        res.locals.user = null;
-        res.cookie("jwt", "", { maxAge: 1 });
-        next();
+        req.user = null;
       } else {
         let user = await UserModel.findById(decodedToken.id);
-        res.locals.user = user;
+        req.user = user;
         next();
       }
     });
   } else {
-    res.locals.user = null;
+    req.user = null;
     next();
   }
 };
 
 module.exports.requireAuth = (req, res, next) => {
-  const token = req.cookies.jwt;
-  if (token) {
-    jwt.verify(token, process.env.TOKEN_SECRET, async (err, decodedToken) => {
-      if (err) {
-        console.log(err);
-        res.send(200).json('no token')
-      } else {
-        console.log(decodedToken.id);
-        next();
-      }
-    });
-  } else {
-    console.log('No token');
-  }
+  if (!req.user)
+    return res.sendStatus(401).json({ error: "Unauthorized" });
+  req.userId = req.user._id;
+  next();
 };

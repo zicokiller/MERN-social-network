@@ -11,7 +11,9 @@ const App = () => {
       await axios({
         method: "get",
         url: `${process.env.REACT_APP_API_URL}jwtid`,
-        withCredentials: true,
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
       })
         .then((res) => setUid(res.data))
         .catch((err) => console.log("No token"));
