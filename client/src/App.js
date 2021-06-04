@@ -23,7 +23,7 @@ const App = () => {
       } catch (e) {
         return console.error("No token");
       }
-      if (res.status != 200) return console.error("No token");
+      if (res.status !== 200) return console.error("No token");
       setUid(res.data);
       dispatch(getUser(res.data));
     })();
