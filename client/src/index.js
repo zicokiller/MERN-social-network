@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
+// Imports
 import { getUsers } from "./actions/users.actions";
 
 // Dev tools
@@ -17,7 +18,7 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 // Allows to dispose all users data in redux store
-store.dispatch(getUsers);
+store.dispatch(getUsers());
 
 ReactDOM.render(
   <Provider store={store}>
