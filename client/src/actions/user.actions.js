@@ -7,11 +7,12 @@ export const UPDATE_BIO = "UPDATE_BIO";
 export const getUser = (uid) => {
   return async (dispatch) => {
     try {
-     const res = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${uid}`);
-    dispatch({type: GET_USER, payload: res.data})
-
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}api/user/${uid}`
+      );
+      dispatch({ type: GET_USER, payload: res.data });
     } catch (e) {
-      return console.error(e);
+      console.error(e);
     }
   };
 };
@@ -26,36 +27,37 @@ export const getUser = (uid) => {
 //             .then((res) => {
 //               dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
 //             });
-        
+
 //       })
 //       .catch((err) => console.log(err));
 //   };
 // };
 
-
 export const uploadPicture = (data, id) => {
   return async (dispatch) => {
-      try {
-          await axios.post(`${process.env.REACT_APP_API_URL}api/user/upload`, data);
-          const res = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${id}`);
-          dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
-      } catch (e) {
-          // Attention ici je l'ai mis dans le catch mais sa request doit renvoyer des codes 200 partout vu le code original
-          console.log(e);
-      }
-  }
+    try {
+      await axios.post(`${process.env.REACT_APP_API_URL}api/user/upload`, data);
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}api/user/${id}`
+      );
+      dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
+    } catch (e) {
+      // Attention ici je l'ai mis dans le catch mais sa request doit renvoyer des codes 200 partout vu le code original
+      console.log(e);
+    }
+  };
 };
 
 export const updateBio = (userId, bio) => {
   return async (dispatch) => {
     try {
-      const res = await axios.put(`${process.env.REACT_APP_API_URL}api/user/` + userId, { bio });
+      const res = await axios.put(
+        `${process.env.REACT_APP_API_URL}api/user/` + userId,
+        { bio }
+      );
+      dispatch({ type: UPDATE_BIO, payload: bio });
     } catch (e) {
       console.log(e);
     }
-    dispatch({type: UPDATE_BIO, payload: bio})
-
-  }
-}
-
-
+  };
+};
