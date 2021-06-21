@@ -2,8 +2,6 @@
  (ici la date de création de profil) */ 
 export const dateParser = (num) => {
   let options = {
-    hour: "2-digit",
-    minute: "2-digit",
     weekday: "long",
     year: "numeric",
     month: "short",

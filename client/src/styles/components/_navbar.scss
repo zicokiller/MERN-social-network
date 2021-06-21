@@ -4,7 +4,7 @@ nav {
   height: 45px;
   border-radius: 6px;
   box-shadow: 18px 1px 0px $color-1, 22px 4px 0px 0px $shadow;
-  z-index: 10;
+  z-index: 99;
   top: 0;
 
   @media screen and(max-width: 1251px) {

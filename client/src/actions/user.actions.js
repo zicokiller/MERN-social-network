@@ -6,13 +6,13 @@ export const UPDATE_BIO = "UPDATE_BIO";
 
 export const getUser = (uid) => {
   return async (dispatch) => {
-    let res;
     try {
-      res = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${uid}`);
+     const res = await axios.get(`${process.env.REACT_APP_API_URL}api/user/${uid}`);
+    dispatch({type: GET_USER, payload: res.data})
+
     } catch (e) {
       return console.error(e);
     }
-    dispatch({type: GET_USER, payload: res.data})
   };
 };
 
@@ -49,7 +49,7 @@ export const uploadPicture = (data, id) => {
 export const updateBio = (userId, bio) => {
   return async (dispatch) => {
     try {
-      const res = await axios.put(`${process.env.REACT_APP_API_URL}api/user/` + userId, bio);
+      const res = await axios.put(`${process.env.REACT_APP_API_URL}api/user/` + userId, { bio });
     } catch (e) {
       console.log(e);
     }

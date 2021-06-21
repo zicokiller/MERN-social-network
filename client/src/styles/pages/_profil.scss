@@ -176,10 +176,7 @@
           transform: translate(-3px, -50%);
           cursor: pointer;
           padding: 10px 20px;
-
-          @media screen and(max-width: 1121px) {
-            opacity: 0;
-          }
+          display: none;
         }
         input[type="submit"] {
           margin-top: 10px;
@@ -267,7 +264,7 @@
       overflow: auto;
       transform: scaleY(0);
       transform-origin: center;
-      animation: modal .5s forwards;
+      animation: modal 0.5s forwards;
 
       h3 {
         min-width: 200px;
