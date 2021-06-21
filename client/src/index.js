@@ -10,11 +10,14 @@ import rootReducer from "./reducers";
 
 // Dev tools
 import { composeWithDevTools } from "redux-devtools-extension";
+import { getUsers } from "./actions/users.actions";
 
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
+
+store.dispatch(getUsers);
 
 ReactDOM.render(
   <Provider store={store}>
