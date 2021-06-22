@@ -3,6 +3,8 @@ import axios from "axios";
 export const GET_USER = "GET_USER";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const UPDATE_BIO = "UPDATE_BIO";
+export const FOLLOW_USER = "FOLLOW_USER";
+export const UNFOLLOW_USER = "UNFOLLOW_USER";
 
 export const getUser = (uid) => {
   return async (dispatch) => {
@@ -42,7 +44,6 @@ export const uploadPicture = (data, id) => {
       );
       dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
     } catch (e) {
-      // Attention ici je l'ai mis dans le catch mais sa request doit renvoyer des codes 200 partout vu le code original
       console.log(e);
     }
   };
@@ -51,11 +52,38 @@ export const uploadPicture = (data, id) => {
 export const updateBio = (userId, bio) => {
   return async (dispatch) => {
     try {
-      const res = await axios.put(
-        `${process.env.REACT_APP_API_URL}api/user/` + userId,
-        { bio }
-      );
+      await axios.put(`${process.env.REACT_APP_API_URL}api/user/` + userId, {
+        bio,
+      });
       dispatch({ type: UPDATE_BIO, payload: bio });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const followUser = (followerId, idToFollow) => {
+  return async (dispatch) => {
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_API_URL}api/user/follow/` + followerId,
+        { idToFollow }
+      );
+      dispatch({ type: FOLLOW_USER, payload: idToFollow });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+export const unfollowUser = (followerId, idToUnfollow) => {
+  return async (dispatch) => {
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_API_URL}api/user/unfollow/` + followerId,
+        { idToUnfollow }
+      );
+      dispatch({ type: UNFOLLOW_USER, payload: idToUnfollow });
     } catch (e) {
       console.log(e);
     }

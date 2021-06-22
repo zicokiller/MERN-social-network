@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { followUser, unfollowUser } from "../../actions/user.actions";
 import { isEmpty } from "../Utils";
 
 /* fonction qui set la logique pour gérer les Abonnements 
@@ -7,10 +8,17 @@ import { isEmpty } from "../Utils";
 function FollowHandler({ idToFollow }) {
   const userData = useSelector((state) => state.userReducer);
   const [isFollowed, setIsFollowed] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleFollow = () => {};
+  const handleFollow = () => {
+    dispatch(followUser(userData._id, idToFollow));
+    setIsFollowed(true);
+  };
 
-  const handleUnFollow = () => {};
+  const handleUnfollow = () => {
+    dispatch(unfollowUser(userData._id, idToFollow));
+    setIsFollowed(false);
+  };
 
   useEffect(() => {
     if (!isEmpty(userData.following.includes(idToFollow))) {
@@ -23,11 +31,11 @@ function FollowHandler({ idToFollow }) {
   return (
     <div>
       {isFollowed && !isEmpty(userData) && (
-        <span onClick={handleUnFollow}>
+        <span onClick={handleUnfollow}>
           <button className="unfollow-btn" >Abonné</button>
         </span>
       )}
-      {isFollowed == false && !isEmpty(userData) && (
+      {isFollowed === false && !isEmpty(userData) && (
         <span onClick={handleFollow}>
         <button className="unfollow-btn" >Suivre</button>
       </span>
