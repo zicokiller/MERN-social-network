@@ -35,7 +35,6 @@ function SignInForm() {
       <input
         type="text"
         name="email"
-        value="email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
       />
@@ -46,7 +45,6 @@ function SignInForm() {
       <input
         type="password"
         name="password"
-        value="password"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
       />

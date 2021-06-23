@@ -9,9 +9,11 @@ export const UNFOLLOW_USER = "UNFOLLOW_USER";
 export const getUser = (uid) => {
   return async (dispatch) => {
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}api/user/${uid}`
-      );
+      const res = await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API_URL}api/user/${uid}`,
+      });
+
       dispatch({ type: GET_USER, payload: res.data });
     } catch (e) {
       console.error(e);
@@ -38,10 +40,16 @@ export const getUser = (uid) => {
 export const uploadPicture = (data, id) => {
   return async (dispatch) => {
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}api/user/upload`, data);
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}api/user/${id}`
-      );
+      await axios({
+        method: "post",
+        url: `${process.env.REACT_APP_API_URL}api/user/upload`,
+        data,
+      });
+      const res = await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API_URL}api/user/${id}`,
+      });
+
       dispatch({ type: UPLOAD_PICTURE, payload: res.data.picture });
     } catch (e) {
       console.log(e);
@@ -52,8 +60,10 @@ export const uploadPicture = (data, id) => {
 export const updateBio = (userId, bio) => {
   return async (dispatch) => {
     try {
-      await axios.put(`${process.env.REACT_APP_API_URL}api/user/` + userId, {
-        bio,
+      await axios({
+        method: "put",
+        url: `${process.env.REACT_APP_API_URL}api/user/` + userId,
+        data: { bio },
       });
       dispatch({ type: UPDATE_BIO, payload: bio });
     } catch (e) {
@@ -65,11 +75,12 @@ export const updateBio = (userId, bio) => {
 export const followUser = (followerId, idToFollow) => {
   return async (dispatch) => {
     try {
-      await axios.patch(
-        `${process.env.REACT_APP_API_URL}api/user/follow/` + followerId,
-        { idToFollow }
-      );
-      dispatch({ type: FOLLOW_USER, payload: idToFollow });
+      await axios({
+        method: "patch",
+        url: `${process.env.REACT_APP_API_URL}api/user/follow/` + followerId,
+        data: { idToFollow },
+      });
+      dispatch({ type: FOLLOW_USER, payload: { idToFollow } });
     } catch (e) {
       console.log(e);
     }
@@ -79,13 +90,28 @@ export const followUser = (followerId, idToFollow) => {
 export const unfollowUser = (followerId, idToUnfollow) => {
   return async (dispatch) => {
     try {
-      await axios.patch(
-        `${process.env.REACT_APP_API_URL}api/user/unfollow/` + followerId,
-        { idToUnfollow }
-      );
-      dispatch({ type: UNFOLLOW_USER, payload: idToUnfollow });
+      await axios({
+        method: "patch",
+        url: `${process.env.REACT_APP_API_URL}api/user/unfollow/` + followerId,
+        data: { idToUnfollow },
+      });
+      dispatch({ type: UNFOLLOW_USER, payload: { idToUnfollow } });
     } catch (e) {
       console.log(e);
     }
   };
 };
+
+/*export const unfollowUser = (followerId, idToUnfollow) => {
+  return (dispatch) => {
+    return axios({
+      method: "patch",
+      url: `${process.env.REACT_APP_API_URL}api/user/unfollow/` + followerId,
+      data: { idToUnfollow },
+    })
+      .then((res) => {
+        dispatch({ type: UNFOLLOW_USER, payload: { idToUnfollow } });
+      })
+      .catch((err) => console.log(err));
+  };
+}; */

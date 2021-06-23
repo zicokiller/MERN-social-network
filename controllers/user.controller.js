@@ -91,7 +91,7 @@ module.exports.unfollow = async (req, res) => {
       { new: true, upsert: true },
       (err, docs) => {
         if (!err) res.status(201).json(docs);
-        else return res.status(400).jsos(err);
+        else return res.status(400).json(err);
       }
     );
     // remove to following list

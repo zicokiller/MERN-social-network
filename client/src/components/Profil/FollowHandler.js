@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { followUser, unfollowUser } from "../../actions/user.actions";
-import { isEmpty } from "../Utils";
+
 
 /* fonction qui set la logique pour gérer les Abonnements 
 (following) et Abonnés (followers) ds les modals du profil*/
@@ -21,7 +21,7 @@ function FollowHandler({ idToFollow }) {
   };
 
   useEffect(() => {
-    if (!isEmpty(userData.following.includes(idToFollow))) {
+    if (userData.following.includes(idToFollow)) {
       setIsFollowed(true);
     } else {
       setIsFollowed(false);
@@ -30,12 +30,12 @@ function FollowHandler({ idToFollow }) {
 
   return (
     <div>
-      {isFollowed && !isEmpty(userData) && (
+      {(isFollowed && userData) && (
         <span onClick={handleUnfollow}>
           <button className="unfollow-btn" >Abonné</button>
         </span>
       )}
-      {isFollowed === false && !isEmpty(userData) && (
+      {(isFollowed === false && userData) && (
         <span onClick={handleFollow}>
         <button className="unfollow-btn" >Suivre</button>
       </span>
