@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { dateParser } from "../Utils";
-import FollowHandler from "../Profil/FollowHandler";
+import { dateParser } from "./Utils";
+import FollowHandler from "./Profil/FollowHandler";
 
 function Card({ post }) {
   const [isloading, setIsLoading] = useState(true);
