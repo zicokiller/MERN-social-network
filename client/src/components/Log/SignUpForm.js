@@ -12,7 +12,6 @@ function SignUpForm() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    let res;
     const terms = document.getElementById("terms");
     const pseudoError = document.querySelector(".pseudo.error");
     const emailError = document.querySelector(".email.error");
@@ -35,7 +34,7 @@ function SignUpForm() {
       }
     } else {
       try {
-        res = await axios({
+        const res = await axios({
           method: "post",
           url: `${process.env.REACT_APP_API_URL}api/user/register`,
           data: {
@@ -51,7 +50,6 @@ function SignUpForm() {
         passwordError.innerHTML = e.response.data.errors.password;
       }
     }
-    console.log(res);
   };
 
   return (

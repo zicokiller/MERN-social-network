@@ -10,6 +10,8 @@ const cors = require('cors');
 
 const app = express();
 
+app.use("/uploads", express.static('client/public/uploads'));
+
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   'allowedHeaders': ['sessionId', 'Content-Type', "Authorization"],

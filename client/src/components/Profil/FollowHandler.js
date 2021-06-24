@@ -5,7 +5,7 @@ import { followUser, unfollowUser } from "../../actions/user.actions";
 
 /* fonction qui set la logique pour gérer les Abonnements 
 (following) et Abonnés (followers) ds les modals du profil*/
-function FollowHandler({ idToFollow }) {
+function FollowHandler({ idToFollow, type }) {
   const userData = useSelector((state) => state.userReducer);
   const [isFollowed, setIsFollowed] = useState(false);
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function FollowHandler({ idToFollow }) {
   };
 
   useEffect(() => {
-    if (userData.following.includes(idToFollow)) {
+    if (userData?.following?.includes(idToFollow)) {
       setIsFollowed(true);
     } else {
       setIsFollowed(false);
@@ -29,18 +29,21 @@ function FollowHandler({ idToFollow }) {
   }, [userData, idToFollow]);
 
   return (
-    <div>
+    <>
       {(isFollowed && userData) && (
         <span onClick={handleUnfollow}>
-          <button className="unfollow-btn" >Abonné</button>
+          {type === "suggestion" && <button className="unfollow-btn">Abonné</button>}
+          {type === "card" && <img src="./img/icons/checked.svg" alt="checked" /> }
         </span>
       )}
       {(isFollowed === false && userData) && (
         <span onClick={handleFollow}>
-        <button className="unfollow-btn" >Suivre</button>
+        {type === "suggestion" && <button className="follow-btn">Suivre</button>}
+        {type === "card" && <img src="./img/icons/check.svg" alt="check" />}
+
       </span>
       )}
-    </div>
+    </>
   );
 }
 
